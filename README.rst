@@ -13,7 +13,7 @@ This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
 
  - Installed debian package repository.
- - Icludes web based management tool `Redis commander`_
+ - Includes web based management tool `Redis-commander`_
 
 
 .. _Redis: https://redis.io/
