@@ -12,7 +12,7 @@ partitioning with Redis Cluster.
 This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
 
- - Installed debian package repository.
+ - Installed from debian package repository.
  - Includes web based management tool `Redis-commander`_
 
 
