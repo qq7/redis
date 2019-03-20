@@ -1,3 +1,5 @@
 #include <turnkey/base>
 redis-server
 build-essential
+
+nginx
