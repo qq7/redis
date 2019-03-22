@@ -12,9 +12,20 @@ partitioning with Redis Cluster.
 This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
 
- - Installed from debian package repository.
- - Includes web based management tool `Redis-commander`_
+ - Redis configurations:
 
+  - Installed from debian package repository.
+  - Includes web based management tool `Redis-commander`_
+
+ - SSL support out of the box.
+ - Postfix MTA (bound to localhost) to allow sending of email from web
+  applications (e.g., password recovery)
+
+Credentials *(passwords set at first boot)*
+-------------------------------------------
+
+- Webmin, SSH: username **root**
+- Redis-commander: username **admin**
 
 .. _Redis: https://redis.io/
 .. _TurnKey Core: https://www.turnkeylinux.org/core
