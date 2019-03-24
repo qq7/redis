@@ -13,12 +13,11 @@ This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
 
 - Redis configurations:
-
  - Installed from debian package repository.
  - Includes web based management tool `Redis-commander`_
-
- - SSL support out of the box.
- - Postfix MTA (bound to localhost) to allow sending of email from web
+ 
+- SSL support out of the box.
+- Postfix MTA (bound to localhost) to allow sending of email from web
   applications (e.g., password recovery)
 
 Credentials *(passwords set at first boot)*
