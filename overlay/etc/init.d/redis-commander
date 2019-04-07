@@ -23,7 +23,12 @@ USER="redis"
 GROUP="redis"
 DESC="Redis Commander"
 DAEMON="/usr/local/bin/redis-commander"
-DAEMONOPTS="--redis-host=127.0.0.1"
+DAEMONOPTS="--redis-host=127.0.0.1
+--redis-password='turnkey1'
+--port=8082
+--http-auth-username=admin
+--http-auth-password=turnkey2
+"
 PIDDIR="/var/run/$NAME"
 PIDFILE="$PIDDIR/$NAME.pid"
 LOGDIR="/var/log/$NAME"

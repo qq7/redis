@@ -1,6 +1,5 @@
 #!/bin/sh -ex
 
-sed -i "s|^bind .*$|bind 0.0.0.0|" /etc/redis/redis.conf
 npm install -g redis-commander
 useradd --system -m -s /bin/false nodejs
 useradd --system -d /home/nodejs -G nodejs -s /bin/false redis-commander
@@ -8,4 +7,12 @@ chmod g+w /home/nodejs
 chmod +x /etc/init.d/redis-commander
 update-rc.d redis-commander defaults
 
+cat >>/etc/stunnel/stunnel.conf<<EOF
+[redis-commander]
+accept  = 12323
+connect = 127.0.0.1:8081
+TIMEOUTclose = 0
+EOF
 
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/redis-commander /etc/nginx/sites-enabled/redis-commander

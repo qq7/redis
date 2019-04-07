@@ -2,4 +2,4 @@
 redis-server
 build-essential
 
-nginx
+nginx /* nginx reverse proxy for Redis-commander web UI */
