@@ -59,7 +59,7 @@ def main():
                                  ("In this mode Redis only replies to queries from the loopback interfaces, and reply to other clients connecting from other" 
                                   "addresses with an error, explaining what is"
 "happening and how to configure Redis properly. (disabled by-default)"),
-                                  'Yes', 'No',)
+                                  'Yes', 'No')
 
     protected_mode_string = { True: "yes", False: "no" }
     conf = "/etc/redis/redis.conf"
