@@ -1,6 +1,11 @@
 #!/bin/sh -ex
 
-npm install -g redis-commander
+chown -R node:node /usr/local/lib/node_modules/
+chown -R node:node /usr/local/bin/
+su -c 'npm install -g redis-commander' node
+chown -R root:staff /usr/local/lib/node_modules/
+chown -R root:staff /usr/local/bin/
+
 useradd --system -m -s /bin/false nodejs
 useradd --system -d /home/nodejs -G nodejs -s /bin/false redis-commander
 chmod g+w /home/nodejs
@@ -14,5 +19,4 @@ connect = 127.0.0.1:8081
 TIMEOUTclose = 0
 EOF
 
-rm /etc/nginx/sites-enabled/default
 ln -s /etc/nginx/sites-available/redis-commander /etc/nginx/sites-enabled/redis-commander
