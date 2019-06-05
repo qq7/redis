@@ -1,4 +1,3 @@
-# connect to Syncthing UI localhost on 8383 (non-standard Syncthing port)
 upstream rediscommander {
     server 127.0.0.1:8082;
 }
@@ -15,7 +14,7 @@ server {
     return 302 https://$host$request_uri;
 }
 
-# reverse proxy for Mayan-EDMS
+# reverse proxy for RedisCommander
 server {
     listen 0.0.0.0:443 ssl;
     access_log /var/log/nginx/redis-commander.log;
