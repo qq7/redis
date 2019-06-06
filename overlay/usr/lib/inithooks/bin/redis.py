@@ -24,6 +24,14 @@ def usage(s=None):
 
 DEFAULT_RANGE = "0.0.0.0"
 
+def validate_ip(ipaddr):
+    if (ipaddr.count('.') != 3):
+        return False
+    parts = ipaddr.split('.')
+    for part in parts:
+        if not part.isdigit() or not (0 <= int(part) <= 255):
+            return False
+    return True
 
 def main():
     try:
@@ -48,11 +56,17 @@ def main():
              "Enter password to access redis-commander UI")
     if not range:
         d = Dialog('TurnKey Linux - First boot configuration')
-        range = d.get_input(
-            "IP Range to access Redis",
-            ("Enter IP range that would be allowed"
-             "to access the Redis instance."),
-             DEFAULT_RANGE)
+        while True:
+            range = d.get_input(
+                "IPv4 Address to access Redis",
+                ("Enter IPv4 Address that would be allowed"
+                 "to access the Redis instance."),
+                 DEFAULT_RANGE)
+            if validate_ip(range):
+                break
+            d.msgbox("Invalid IPv4 Address",
+                "\"{}\" is not a valid IPv4 address!".format(range))
+            
     if not protected_mode:
         d = Dialog('TurnKey Linux - First boot configuration')
         protected_mode = d.yesno('Keep protected-mode enabled?',
