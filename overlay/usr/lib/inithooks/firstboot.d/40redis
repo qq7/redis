@@ -15,8 +15,3 @@ if [ -n "$APP_PASS" ]; then
 fi
 
 $INITHOOKS_PATH/bin/redis.py --pass="$APP_PASS" --ip_bind="$APP_IP_BIND" --protected_mode="$APP_PROTECTED"
-
-PASS=$(mcookie)$(mcookie)$(mcookie)$(mcookie)$(mcookie)
-sed -i "s/protected-mode yes|protected-mode no" /etc/redis/redis.conf
-sed -ri "s/(# )?requirepass .*./requirepass $PASS/" /etc/redis/redis.conf
-sed -ri "s|--redis-password='.*'|--redis-password='$PASS'|" /etc/init.d/redis-commander
