@@ -40,7 +40,7 @@ def main():
     except getopt.GetoptError, e:
         usage(e)
 
-    pass = ""
+    password = ""
     ip_bind = ""
     protected_mode = ""
     for opt, val in opts:
@@ -48,6 +48,10 @@ def main():
             usage()
         elif opt == '--ip_bind':
             ip_bind = val
+        elif opt == '--pass':
+            password = val
+        elif opt == 'protected_mode':
+            protected_mode = val
 
     if not password:
         d = Dialog('TurnKey Linux - First boot configuration')
