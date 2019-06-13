@@ -9,10 +9,11 @@ PWORD=$2
 
 function usage() {
     echo -e "Usage: turnkey-redis-pw get\nUsage: turnkey-redis-pw set <password>" 1>&2
+    echo -e "Warning: If manually setting a redis password, ensure that it is a REALLY good one!"
     exit 1
 }
 function get_pword() {
-    sed -n 's/^\s*requirepass\s*//p' "$REDIS_CONF"
+    sed -n 's|^\s*requirepass\s*||p' "$REDIS_CONF"
 }
 function set_pword() {
     pword="$1"
@@ -20,7 +21,7 @@ function set_pword() {
     if [[ -z "$old_pword" ]]; then
         echo "requirepass $pword" >> "$REDIS_CONF"
     else
-        sed -i "s/^\\s*requirepass.*/requirepass $pword/g" "$REDIS_CONF"
+        sed -i "s|^\\s*requirepass.*|requirepass $pword|g" "$REDIS_CONF"
     fi
 }
 
