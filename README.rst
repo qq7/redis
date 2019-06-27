@@ -1,5 +1,5 @@
-Redis - open source, in-memory data structure store.
-=======================================================
+Redis - Open Source, In-memory Data Structure Store
+===================================================
 
 `Redis`_ is used as a database, cache and message broker. It supports data 
 structures such as strings, hashes, lists, sets, sorted sets 
@@ -13,9 +13,12 @@ This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
 
 - Redis configurations:
- - Installed from debian package repository.
- - Includes web based management tool `Redis-commander`_
- 
+
+ - Installed from debian package repository (auto security updates).
+ - Includes web based management tool `Redis-commander`_.
+ - Complex Redis system password auto-generated on firstboot (security).
+ - Confconsole plugin provided to view Redis system password (convenience).
+
 - SSL support out of the box.
 - Postfix MTA (bound to localhost) to allow sending of email from web
   applications (e.g., password recovery)
