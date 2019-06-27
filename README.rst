@@ -14,10 +14,10 @@ and on top of that:
 
 - Redis configurations:
 
- - Installed from debian package repository (auto security updates).
- - Includes web based management tool `Redis-commander`_.
- - Complex Redis system password auto-generated on firstboot (security).
- - Confconsole plugin provided to view Redis system password (convenience).
+    - Installed from debian package repository (auto security updates).
+    - Includes web based management tool `Redis-commander`_.
+    - Complex Redis system password auto-generated on firstboot (security).
+    - Confconsole plugin provided to view Redis system password (convenience).
 
 - SSL support out of the box.
 - Postfix MTA (bound to localhost) to allow sending of email from web
