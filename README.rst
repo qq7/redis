@@ -1,13 +1,14 @@
 Redis - Open Source, In-memory Data Structure Store
 ===================================================
 
-`Redis`_ is used as a database, cache and message broker. It supports data 
-structures such as strings, hashes, lists, sets, sorted sets 
-with range queries, bitmaps, hyperloglogs and geospatial indexes 
-with radius queries. Redis has built-in replication, Lua scripting, 
-LRU eviction, transactions and different levels of on-disk persistence, 
-and provides high availability via Redis Sentinel and automatic 
-partitioning with Redis Cluster.
+`Redis`_ can be used as a database, cache or message broker. It supports data
+structures such as strings, hashes, lists, sets, sorted sets
+with range queries, bitmaps, hyperloglogs and geospatial indexes
+with radius queries. Redis has built-in replication, Lua scripting,
+LRU eviction, transactions and different levels of on-disk persistence,
+and provides high availability via `Redis Sentinel`_ (requires install of
+Debian `redis-sentinel`_ package) and automatic partitioning with
+`Redis Cluster`_.
 
 This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
@@ -21,7 +22,7 @@ and on top of that:
 
 - SSL support out of the box.
 - Postfix MTA (bound to localhost) to allow sending of email from web
-  applications (e.g., password recovery)
+  applications (e.g., password recovery).
 
 Credentials *(passwords set at first boot)*
 -------------------------------------------
@@ -30,5 +31,8 @@ Credentials *(passwords set at first boot)*
 - Redis-commander: username **admin**
 
 .. _Redis: https://redis.io/
+.. _Redis Sentinel: https://redis.io/topics/sentinel
+.. _redis-sentinel: https://packages.debian.org/stretch/redis-sentinel
+.. _Redis Cluster: https://redis.io/topics/cluster-tutorial
 .. _TurnKey Core: https://www.turnkeylinux.org/core
 .. _Redis-commander: https://github.com/joeferner/redis-commander
