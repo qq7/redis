@@ -4,6 +4,9 @@ turnkey-redis-16.0 (1) turnkey; urgency=low
 
   * RedisCommander upgraded to 0.7.0
 
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances.
+
  -- Stefan Davis <stefan@turnkeylinux.org>  Mon, 22 Jun 2020 13:53:04 +1000
 
 turnkey-redis-15.0 (1) turnkey; urgency=low
