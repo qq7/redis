@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Set Redis-commander password and Redis remote IP bind and protected-mode directives
 
 Option:
@@ -11,15 +11,15 @@ import sys
 import getopt
 import hashlib
 
-from executil import system, ExecError
+import subprocess
 from dialog_wrapper import Dialog
 
 
 def usage(s=None):
     if s:
-        print >> sys.stderr, "Error:", s
-    print >> sys.stderr, "Syntax: %s [options]" % sys.argv[0]
-    print >> sys.stderr, __doc__
+        print("Error:", s, file=sys.stderr)
+    print("Syntax: %s [options]" % sys.argv[0], file=sys.stderr)
+    print(__doc__, file=sys.stderr)
     sys.exit(1)
 
 DEFAULT_BIND = "0.0.0.0"
@@ -37,7 +37,7 @@ def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
                                        ['help', 'pass=', 'ip_bind=', 'protected_mode='])
-    except getopt.GetoptError, e:
+    except getopt.GetoptError as e:
         usage(e)
 
     password = ""
@@ -83,26 +83,29 @@ def main():
     protected_mode_string = { True: "yes", False: "no" }
     conf = "/etc/redis/redis.conf"
     redis_commander_conf = "/etc/init.d/redis-commander" 
-    system("sed -i \"s|^bind .*|bind %s|\" %s" % (ip_bind, conf))
-    system("""
-            sed -i \"s|^protected-mode .*|protected-mode %s|\" %s""" 
-% (protected_mode_string[protected_mode], conf))
-    system("""
-            sed -i \"s|--http-auth-password=.*|--http-auth-password=%s|\" %s""" 
-% (password, redis_commander_conf))
+    subprocess.run(["sed", "-i", "s|^bind .*|bind %s|" % ip_bind, conf])
+    subprocess.run([
+        "sed", "-i",
+        "s|^protected-mode .*|protected-mode %s|" % 
+            protected_mode_string[protected_mode],
+        conf])
+    subprocess.run([
+        "sed", "-i", 
+        "s|--http-auth-password=.*|--http-auth-password=%s|" %
+        password, redis_commander_conf])
 
     # restart redis and redis commander if running so change takes effect
     try:
-        system("systemctl is-active --quiet redis-server.service")
-        system("service redis-server restart")
-    except ExecError, e:
+        subprocess.run(["systemctl", "is-active", "--quiet", "redis-server.service"])
+        subprocess.run(["service", "redis-server", "restart"])
+    except ExecError as e:
         pass
 
     try:
-        system("systemctl is-active --quiet redis-commander.service")
-        system("systemctl daemon-reload")
-        system("service redis-commander restart")
-    except ExecError, e:
+        subprocess.run(["systemctl", "is-active", "--quiet", "redis-commander.service"])
+        subprocess.run(["systemctl", "daemon-reload"])
+        subprocess.run(["service", "redis-commander", "restart"])
+    except ExecError as e:
         pass
 
 

@@ -1,3 +1,11 @@
+turnkey-redis-16.0 (1) turnkey; urgency=low
+
+  * Redis upgraded to 5.0.3 (installed from Debian Repos)
+
+  * RedisCommander upgraded to 0.7.0
+
+ -- Stefan Davis <stefan@turnkeylinux.org>  Mon, 22 Jun 2020 13:53:04 +1000
+
 turnkey-redis-15.0 (1) turnkey; urgency=low
 
   * Initial release of appliance.
