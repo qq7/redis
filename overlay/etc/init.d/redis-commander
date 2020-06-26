@@ -28,6 +28,7 @@ DAEMONOPTS="--redis-host=127.0.0.1
 --port=8082
 --http-auth-username=admin
 --http-auth-password=turnkey2
+--address=127.0.0.1
 "
 PIDDIR="/var/run/$NAME"
 PIDFILE="$PIDDIR/$NAME.pid"
