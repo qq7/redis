@@ -1,3 +1,9 @@
+turnkey-redis-16.1 (1) turnkey; urgency=low
+
+  * Rebuild to resolve #1503.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 05 Aug 2020 15:01:11 +1000
+
 turnkey-redis-16.0 (1) turnkey; urgency=low
 
   * Redis upgraded to 5.0.3 (installed from Debian Repos)
