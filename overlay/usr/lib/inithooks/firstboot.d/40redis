@@ -2,7 +2,7 @@
 
 . /etc/default/inithooks
 
-[ -e $INITHOOKS_CONF ] && . INITHOOKS_CONF
+[ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
 
 # ensure other values are set if APP_PASS is
 if [ -n "$APP_PASS" ]; then
