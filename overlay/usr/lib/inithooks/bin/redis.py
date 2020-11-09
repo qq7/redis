@@ -1,11 +1,14 @@
 #!/usr/bin/python3
-"""Set Redis-commander password and Redis remote IP bind and protected-mode
+"""Set Redis-commander password and Redis bind and protected-mode
 directives.
 
 Option:
-    --ip_bind=         unless provided, will ask interactively
-    --pass=            unless provided, will ask interactively
-    --protected_mode=  disabled by-default
+    --bind=             unless provided, will ask interactively.
+                            [localhost|all]
+    --pass=             unless provided, will ask interactively.
+                            WARNING: set good password if unprotected!
+    --protected_mode=   unless provided, will ask interactively.
+                            [yes|no]
 """
 
 import sys
@@ -15,8 +18,6 @@ import subprocess
 
 from dialog_wrapper import Dialog
 
-DEFAULT_BIND = "127.0.0.1"
-
 
 def usage(s=None):
     if s:
@@ -24,16 +25,6 @@ def usage(s=None):
     print("Syntax: %s [options]" % sys.argv[0], file=sys.stderr)
     print(__doc__, file=sys.stderr)
     sys.exit(1)
-
-
-def validate_ip(ipaddr):
-    if (ipaddr.count('.') != 3):
-        return False
-    parts = ipaddr.split('.')
-    for part in parts:
-        if not part.isdigit() or not (0 <= int(part) <= 255):
-            return False
-    return True
 
 
 def main():
@@ -45,51 +36,55 @@ def main():
         usage(e)
 
     password = ""
-    ip_bind = ""
+    bind = ""
     protected_mode = ""
     for opt, val in opts:
         if opt in ('-h', '--help'):
             usage()
-        elif opt == '--ip_bind':
-            ip_bind = val
+        elif opt == '--bind':
+            bind = val
         elif opt == '--pass':
             password = val
-        elif opt == 'protected_mode':
+        elif opt == '--protected_mode':
             protected_mode = val
 
     if not password:
         d = Dialog('TurnKey Linux - First boot configuration')
         password = d.get_password(
-             "Redis-commander password",
-             "Enter password to access redis-commander UI")
-    if not ip_bind:
+             "Redis-commander 'admin' password",
+             "Enter password for 'addmin' access to redis-commander UI")
+
+    if not bind:
         d = Dialog('TurnKey Linux - First boot configuration')
-        while True:
-            ip_bind = d.get_input(
-                "IPv4 Address to access Redis",
-                ("Enter IPv4 Address that will be allowed"
-                 " to access the Redis instance."),
-                DEFAULT_BIND)
-            if validate_ip(ip_bind):
-                break
-            d.msgbox(
-                "Invalid IPv4 Address",
-                "\"{}\" is not a valid IPv4 address!".format(ip_bind))
+        bind = d.menu(
+            "Interface(s) for Redis to bind to",
+            ("Inteface for Redis to bind to?\n\nIf you wish to securely"
+             " allow remote connections using 'all', ensure the system"
+             " firewall is enabled & block all traffic on port 6379,"
+             " except for the desired remote IP(s).\n\nManually edit the"
+             " config file to set a custom interface."),
+            choices=(
+                ("localhost", "Redis will not respond to remote computer"),
+                ("all", "Redis will allow all connections")))
+    if bind == "all":
+        bind_ip = "0.0.0.0"
+    else:
+        bind_ip = "127.0.0.1"
 
     if not protected_mode:
         d = Dialog('TurnKey Linux - First boot configuration')
         protected_mode = d.yesno(
                 'Keep protected-mode enabled?',
-                ("In this mode Redis only replies to queries from the loopback"
-                 " interfaces. Reply to other clients connecting from other"
-                 " addresses will receive an error, noting why & how to"
-                 " configure Redis. (disabled by-default)"),
+                "In protected  mode Redis only replies to queries from"
+                " localhost. Clients connecting from other addresses will"
+                " receive an error, noting why & how to configure Redis.\n"
+                "\nUnless you set really good password, this is recommended",
                 'Yes', 'No')
 
     protected_mode_string = {True: "yes", False: "no"}
     conf = "/etc/redis/redis.conf"
     redis_commander_conf = "/etc/init.d/redis-commander"
-    subprocess.run(["sed", "-i", "s|^bind .*|bind %s|" % ip_bind, conf])
+    subprocess.run(["sed", "-i", "s|^bind .*|bind %s|" % bind_ip, conf])
     subprocess.run([
         "sed", "-i",
         "s|^protected-mode .*|protected-mode %s|" %
