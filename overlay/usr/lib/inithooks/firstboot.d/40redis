@@ -10,8 +10,10 @@ if [ -n "$APP_PASS" ]; then
         APP_IP_BIND="0.0.0.0"
     fi
     if [ -z "$APP_PROTECTED" ]; then
-        APP_PROTECTED="no"
+        # decided to default to protected mode just in case...
+        APP_PROTECTED="yes"
     fi
 fi
 
-$INITHOOKS_PATH/bin/redis.py --pass="$APP_PASS" --ip_bind="$APP_IP_BIND" --protected_mode="$APP_PROTECTED"
+$INITHOOKS_PATH/bin/redis.py --pass="$APP_PASS" \
+    --ip_bind="$APP_IP_BIND" --protected_mode="$APP_PROTECTED"

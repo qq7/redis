@@ -15,7 +15,7 @@ import subprocess
 
 from dialog_wrapper import Dialog
 
-DEFAULT_BIND = "0.0.0.0"
+DEFAULT_BIND = "127.0.0.1"
 
 
 def usage(s=None):
