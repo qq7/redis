@@ -1,3 +1,22 @@
+turnkey-redis-16.2 (1) turnkey; urgency=low
+
+  * Significant refactoring to Inithook:
+
+    - New default: bind to 127.0.0.1 interface.
+    - New default: leave 'protected mode' enabled/true when run
+      non-interactively.
+    - Rewording of some dialogs.
+    - Replce '--bind_ip' switch with '--bind' - select either 'localhost' or
+      'all' interfaces to bind to (rather than stating IP).
+    - Fix typo in firstboot.d/40redis - closes #1392.
+
+  * Fix Redis password check Confconsole plugin failing - closes #1533.
+
+  * Rename Redis pasword check Confconsole plugin to make it clear it relates
+    to Redis (menu entry comes from filename).
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Thu, 19 Nov 2020 09:36:08 +1100
+
 turnkey-redis-16.1 (1) turnkey; urgency=low
 
   * Rebuild to resolve #1503.
