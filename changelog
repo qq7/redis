@@ -1,12 +1,14 @@
 turnkey-redis-16.2 (1) turnkey; urgency=low
 
+  * RedisCommander upgraded to 0.7.1.
+
   * Significant refactoring to Inithook:
 
     - New default: bind to 127.0.0.1 interface.
     - New default: leave 'protected mode' enabled/true when run
       non-interactively.
     - Rewording of some dialogs.
-    - Replce '--bind_ip' switch with '--bind' - select either 'localhost' or
+    - Replace '--bind_ip' switch with '--bind' - select either 'localhost' or
       'all' interfaces to bind to (rather than stating IP).
     - Fix typo in firstboot.d/40redis - closes #1392.
 
@@ -15,7 +17,10 @@ turnkey-redis-16.2 (1) turnkey; urgency=low
   * Rename Redis pasword check Confconsole plugin to make it clear it relates
     to Redis (menu entry comes from filename).
 
- -- Jeremy Davis <jeremy@turnkeylinux.org>  Thu, 19 Nov 2020 09:36:08 +1100
+  * Note: Please refer to turnkey-core's 16.1 changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Tue, 23 Feb 2021 15:08:02 +1100
 
 turnkey-redis-16.1 (1) turnkey; urgency=low
 
