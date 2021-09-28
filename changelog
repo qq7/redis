@@ -1,3 +1,9 @@
+turnkey-redis-16.3 (1) turnkey; urgency=low
+
+  * Bugfix inithooks - closes #1650.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Mon, 27 Sep 2021 12:19:36 +1000
+
 turnkey-redis-16.2 (1) turnkey; urgency=low
 
   * RedisCommander upgraded to 0.7.1.

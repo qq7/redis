@@ -16,4 +16,4 @@ if [ -n "$APP_PASS" ]; then
 fi
 
 $INITHOOKS_PATH/bin/redis.py --pass="$APP_PASS" \
-    --ip_bind="$APP_IP_BIND" --protected_mode="$APP_PROTECTED"
+    --bind="$APP_IP_BIND" --protected_mode="$APP_PROTECTED"

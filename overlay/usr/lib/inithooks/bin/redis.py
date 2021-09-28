@@ -22,7 +22,7 @@ from dialog_wrapper import Dialog
 def usage(s=None):
     if s:
         print("Error:", s, file=sys.stderr)
-    print("Syntax: %s [options]" % sys.argv[0], file=sys.stderr)
+    print(f"Syntax: {sys.argv[0]} [options]", file=sys.stderr)
     print(__doc__, file=sys.stderr)
     sys.exit(1)
 
@@ -31,7 +31,7 @@ def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
                                        ['help', 'pass=',
-                                        'ip_bind=', 'protected_mode='])
+                                        'bind=', 'protected_mode='])
     except getopt.GetoptError as e:
         usage(e)
 
@@ -81,26 +81,26 @@ def main():
                 "\nUnless you set really good password, this is recommended",
                 'Yes', 'No')
 
-    protected_mode_string = {True: "yes", False: "no"}
+    protected_mode_str = {True: "yes", False: "no"}
+    protected_mode = protected_mode_str[protected_mode]
     conf = "/etc/redis/redis.conf"
     redis_commander_conf = "/etc/init.d/redis-commander"
-    subprocess.run(["sed", "-i", "s|^bind .*|bind %s|" % bind_ip, conf])
+    subprocess.run(["sed", "-i", f"s|^bind .*|bind {bind_ip}|", conf])
     subprocess.run([
         "sed", "-i",
-        "s|^protected-mode .*|protected-mode %s|" %
-        protected_mode_string[protected_mode],
+        f"s|^protected-mode .*|protected-mode {protected_mode}|",
         conf])
     subprocess.run([
         "sed", "-i",
-        "s|--http-auth-password=.*|--http-auth-password=%s|" %
-        password, redis_commander_conf])
+        f"s|--http-auth-password=.*|--http-auth-password={password}|",
+        redis_commander_conf])
 
     # restart redis and redis commander if running so change takes effect
     try:
         subprocess.run(["systemctl", "is-active",
                         "--quiet", "redis-server.service"])
         subprocess.run(["service", "redis-server", "restart"])
-    except ExecError as e:
+    except ExecError:
         pass
 
     try:
@@ -108,7 +108,7 @@ def main():
                         "--quiet", "redis-commander.service"])
         subprocess.run(["systemctl", "daemon-reload"])
         subprocess.run(["service", "redis-commander", "restart"])
-    except ExecError as e:
+    except ExecError:
         pass
 
 
