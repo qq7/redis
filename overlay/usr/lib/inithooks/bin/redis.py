@@ -52,7 +52,7 @@ def main():
         d = Dialog('TurnKey Linux - First boot configuration')
         password = d.get_password(
              "Redis-commander 'admin' password",
-             "Enter password for 'addmin' access to redis-commander UI")
+             "Enter password for 'admin' access to redis-commander UI")
 
     if not bind:
         d = Dialog('TurnKey Linux - First boot configuration')
