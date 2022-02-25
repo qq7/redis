@@ -10,7 +10,7 @@ module.exports = {
     }
   }, {
     name: "TurnKey Linux CP",
-    script: "./tklweb-cp.js"
+    script: "/opt/tklweb-cp/tklweb-cp.js"
   }],
 
   deploy : {
