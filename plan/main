@@ -1,5 +1,4 @@
 #include <turnkey/base>
-redis-server
-build-essential
+#include <turnkey/nodejs>
 
-nginx /* nginx reverse proxy for Redis-commander web UI */
+redis-server

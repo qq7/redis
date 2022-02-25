@@ -16,7 +16,8 @@ import getopt
 import hashlib
 import subprocess
 
-from dialog_wrapper import Dialog
+from netinfo import get_ifnames, InterfaceInfo
+from libinithooks.dialog_wrapper import Dialog
 
 
 def usage(s=None):
@@ -65,9 +66,14 @@ def main():
              " config file to set a custom interface."),
             choices=(
                 ("localhost", "Redis will not respond to remote computer"),
-                ("all", "Redis will allow all connections")))
+                ("all", "Redis will allow all connections"),
+                ("local", "Enter custom range")))
     if bind == "all":
         bind_ip = "0.0.0.0"
+    if bind == "local":
+        localaddr = InterfaceInfo(get_ifnames()[0]).address
+        d = Dialog('TurnKey Linux - First boot configuration')
+        bind_ip = d.get_input("Bind IP Range", "Enter bind ip range", localaddr)    
     else:
         bind_ip = "127.0.0.1"
 
@@ -84,7 +90,7 @@ def main():
     protected_mode_str = {True: "yes", False: "no"}
     protected_mode = protected_mode_str[protected_mode]
     conf = "/etc/redis/redis.conf"
-    redis_commander_conf = "/etc/init.d/redis-commander"
+    redis_commander_conf = "/opt/tklweb-cp/ecosystem.config.js"
     subprocess.run(["sed", "-i", f"s|^bind .*|bind {bind_ip}|", conf])
     subprocess.run([
         "sed", "-i",
@@ -92,7 +98,7 @@ def main():
         conf])
     subprocess.run([
         "sed", "-i",
-        f"s|--http-auth-password=.*|--http-auth-password={password}|",
+        f"s|HTTP_PASSWORD\": \".*\"|HTTP_PASSWORD\": \"{password}\"|",
         redis_commander_conf])
 
     # restart redis and redis commander if running so change takes effect
@@ -103,11 +109,17 @@ def main():
     except ExecError:
         pass
 
+    # reload and restart pm2 so changes take affect
+    # and save them to /home/node/.pm2/dump.pm2
     try:
         subprocess.run(["systemctl", "is-active",
-                        "--quiet", "redis-commander.service"])
-        subprocess.run(["systemctl", "daemon-reload"])
-        subprocess.run(["service", "redis-commander", "restart"])
+                        "--quiet", "pm2-node.service"])
+        subprocess.run(["systemctl", "reload",
+                        "pm2-node.service"])
+#        subprocess.run(["rm", "/home/node/.pm2/dump.pm2"])
+        subprocess.run(["pm2", "reload", "/opt/tklweb-cp/ecosystem.config.js"],env={"PM2_HOME": "/home/node/.pm2", "PATH": "/usr/local/bin"}, check=True, user="node")
+        subprocess.run(["pm2", "save"],env={"PM2_HOME": "/home/node/.pm2", "PATH": "/usr/local/bin"}, check=True, user="node")
+        subprocess.run(["service", "pm2-node", "restart"])
     except ExecError:
         pass
 
