@@ -1,3 +1,14 @@
+(draft)
+turnkey-redis-17.0 (1) turnkey; urgency=low
+
+  * Add the ability to add local-ip.
+
+  * Add homepage control panel.
+
+  * Include pm2 Node.js process manager.
+
+ -- Zhenya Hvorostian <zhenya@turnkeylinux.org>  Fri, 25 Feb 2022 03:03:53 +0300
+
 turnkey-redis-16.3 (1) turnkey; urgency=low
 
   * Bugfix inithooks - closes #1650.
