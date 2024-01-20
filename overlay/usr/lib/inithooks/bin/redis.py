@@ -87,7 +87,7 @@ def main():
                 "\nUnless you set really good password, this is recommended",
                 'Yes', 'No')
 
-    protected_mode_str = {True: "yes", False: "no"}
+    protected_mode_str = {True: "yes", False: "no", "1": "yes", "0": "no"}
     protected_mode = protected_mode_str[protected_mode]
     conf = "/etc/redis/redis.conf"
     redis_commander_conf = "/opt/tklweb-cp/ecosystem.config.js"
